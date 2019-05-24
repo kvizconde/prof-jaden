@@ -133,31 +133,43 @@ const checkArray = {
 // Determines if validation is correct or incorrect
 let timer = null;
 
+function time() {
+  timer = window.setTimeout(() => {
+    validCheck.removeAttr('style').html('Validate');
+  }, 1000);
+}
+
+function start() {
+  window.clearTimeout(timer);
+  timer = null;
+}
+
 function arraysEqual(arr1, arr2) {
   const arrayPushed = arr1.filter(x => typeof x !== 'undefined').length;
 
   if (arrayPushed !== arr2.length) return false;
 
   if (JSON.stringify(arr1) === JSON.stringify(arr2)) {
-    clearTimeout(timer);
+    start();
     validCheck
       .css({
         'background-color': 'var(--green-hover)',
         color: 'var(--bg-light-color)',
       })
       .html('Correct! 👍');
-    nextBtn.css('visibility', 'visible');
+    if (lesson === 0) {
+      nextBtn.css('visibility', 'visible');
+    }
   } else {
+    start();
     validCheck
       .css({
         'background-color': 'var(--red-text-color)',
         color: 'var(--bg-light-color)',
       })
       .html('Wrong! 👎');
-
-    timer = setTimeout(() => {
-      validCheck.removeAttr('style').html('Validate');
-    }, 1000);
+    console.log(timer);
+    time();
   }
   return true;
 }
@@ -256,7 +268,6 @@ function changeLogic(x) {
         arraysEqual(answerArr, checkArray.thenState);
       });
       nextBtn.mousedown(() => {
-        nextBtn.css('visibility', 'hidden');
         changeLogic(1);
         symbolThen.detach();
         answerArr = [];
@@ -283,14 +294,13 @@ function changeLogic(x) {
       symbolOr.insertAfter(varQ);
       validCheck.mousedown(() => {
         arraysEqual(answerArr, checkArray.orState);
-        clearTimeout(timer);
       });
 
       nextBtn.mousedown(() => {
-        nextBtn.css('visibility', 'hidden');
         changeLogic(2);
         symbolOr.detach();
         answerArr = [];
+        validCheck.removeAttr('style').html('Validate');
         testArea.removeAttr('style');
         // Reset dragNdrop position
         varBoxes.css({
@@ -316,15 +326,13 @@ function changeLogic(x) {
 
       validCheck.mousedown(() => {
         arraysEqual(answerArr, checkArray.thenState);
-        clearTimeout(timer);
       });
 
       nextBtn.mousedown(() => {
-        nextBtn.css('visibility', 'hidden');
         changeLogic(3);
         answerArr = [];
         testArea.removeAttr('style');
-        validCheck.removeAttr('style');
+        validCheck.removeAttr('style').html('Validate');
         // Reset dragNdrop position
         varBoxes.css({
           left: varBoxes.data('originalLeft'),
@@ -347,15 +355,13 @@ function changeLogic(x) {
 
       validCheck.mousedown(() => {
         arraysEqual(answerArr, checkArray.thenState);
-        clearTimeout(timer);
       });
 
       nextBtn.mousedown(() => {
-        nextBtn.css('visibility', 'hidden');
         changeLogic(4);
         answerArr = [];
         testArea.removeAttr('style');
-        validCheck.removeAttr('style');
+        validCheck.removeAttr('style').html('Validate');
         // Reset dragNdrop position
         varBoxes.css({
           left: varBoxes.data('originalLeft'),
@@ -379,15 +385,13 @@ function changeLogic(x) {
 
       validCheck.mousedown(() => {
         arraysEqual(answerArr, checkArray.thenState);
-        clearTimeout(timer);
       });
 
       nextBtn.mousedown(() => {
-        nextBtn.css('visibility', 'hidden');
         changeLogic(5);
         answerArr = [];
         testArea.removeAttr('style');
-        validCheck.removeAttr('style');
+        validCheck.removeAttr('style').html('Validate');
         symbolThen.detach();
         // Reset dragNdrop position
         varBoxes.css({
@@ -412,13 +416,12 @@ function changeLogic(x) {
 
       validCheck.mousedown(() => {
         arraysEqual(answerArr, checkArray.andState);
-        clearTimeout(timer);
       });
 
       nextBtn.mousedown(() => {
-        nextBtn.css('visibility', 'hidden');
         changeLogic(6);
         answerArr = [];
+        validCheck.removeAttr('style').html('Replay? 🔁');
         testArea.remove();
         varBoxes.remove();
         $('.snippet__help').remove();
@@ -433,7 +436,6 @@ function changeLogic(x) {
       nextBtn.remove();
       $('.follow__me').css('display', 'flex');
       $('.follow__me').insertAfter(snippetHeading);
-      validCheck.html('Replay? 🔁');
 
       $('.snippet__heading').html('Thank You');
       snippetHeading.innerHTML = "You've reached the end! 🎉";
