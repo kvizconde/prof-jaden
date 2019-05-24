@@ -138,10 +138,6 @@ function arraysEqual(arr1, arr2) {
 
   if (arrayPushed !== arr2.length) return false;
 
-  if (lesson === 5) {
-    clearTimeout(timer);
-  }
-
   if (JSON.stringify(arr1) === JSON.stringify(arr2)) {
     clearTimeout(timer);
     validCheck
@@ -411,7 +407,6 @@ function changeLogic(x) {
 
       varBoxes.attr('style');
       symbolAnd.insertAfter(varQ);
-      varP.insertAfter(symbolAnd);
       varP.html('P');
       varQ.html('~Q');
 
