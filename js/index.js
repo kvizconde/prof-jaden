@@ -241,7 +241,7 @@ function snippetHelperHTML(x) {
   }
 
   if (x === 5) {
-    snippetHelper.html(`${getHyp}, and ${replaceConc}.`);
+    snippetHelper.html(`${getHyp} and ${replaceConc}.`);
   }
 }
 
