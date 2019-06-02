@@ -168,7 +168,7 @@ function arraysEqual(arr1, arr2) {
         color: 'var(--bg-light-color)',
       })
       .html('Wrong! 👎');
-    console.log(timer);
+    // console.log(timer);
     time();
   }
   return true;
